@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -14,50 +13,47 @@
     html, body { width: 100%; height: 100%; overflow: hidden; background: #1a0507; }
     #root { width: 100%; height: 100%; }
 
-```
-#stage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 960px;
-  height: 540px;
-  transform-origin: top left;
-  /* transform set by JS */
-}
+    #stage {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 960px;
+      height: 540px;
+      transform-origin: top left;
+      /* transform set by JS */
+    }
 
-#nav {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 8px 20px;
-  z-index: 100;
-}
+    #nav {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 20px;
+      z-index: 100;
+    }
 
-.nav-btn {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
-  color: #fff;
-  padding: 6px 18px;
-  border-radius: 4px;
-  font-family: 'Source Sans 3', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  cursor: pointer;
-}
-.nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+    .nav-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 4px;
+      font-family: 'Source Sans 3', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
-.dot {
-  height: 8px; border-radius: 4px;
-  background: rgba(255,255,255,0.2);
-  cursor: pointer; transition: width 0.25s;
-  display: inline-block;
-}
-.dot.active { background: rgba(255,255,255,0.65); }
-```
-
+    .dot {
+      height: 8px; border-radius: 4px;
+      background: rgba(255,255,255,0.2);
+      cursor: pointer; transition: width 0.25s;
+      display: inline-block;
+    }
+    .dot.active { background: rgba(255,255,255,0.65); }
   </style>
 </head>
 <body>
@@ -399,6 +395,5 @@
   ReactDOM.createRoot(document.getElementById("react-root")).render(<App />);
   scaleStage();
 </script>
-
 </body>
 </html>

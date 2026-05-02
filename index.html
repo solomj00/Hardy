@@ -19,18 +19,16 @@
   <script type="text/babel">
     const { useState, useEffect, useCallback } = React;
 
-    const BURG      = "#5e1315";
-    const BURG_L    = "#8b2326";
-    const WHITE     = "#FFFFFF";
-    const OFF_WHITE = "#F8F5F2";
-    const LGRAY     = "#F3F4F6";
-    const MGRAY     = "#9CA3AF";
-    const DGRAY     = "#4B5563";
-    const GREEN     = "#166534";
-    const RED       = "#991B1B";
-    const ACCENT    = "#CBD5E1"; // light blue-grey for borders/progress
+    const BURG   = "#5e1315";
+    const BURG_L = "#8b2326";
+    const WHITE  = "#FFFFFF";
+    const OFFWH  = "#F8F5F2";
+    const LGRAY  = "#F3F4F6";
+    const MGRAY  = "#9CA3AF";
+    const DGRAY  = "#374151";
+    const GREEN  = "#15803D";
 
-    const slide = {
+    const base = {
       width: "100%", height: "100%",
       display: "flex", flexDirection: "column",
       position: "relative", overflow: "hidden",
@@ -39,88 +37,88 @@
     function Bar({ n, total }) {
       return (
         <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, background: "#E5E7EB" }}>
-          <div style={{ height: "100%", width: `${(n / total) * 100}%`, background: BURG_L, transition: "width 0.4s" }} />
+          <div style={{ height: "100%", width: `${(n / total) * 100}%`, background: BURG_L }} />
         </div>
       );
     }
 
-    // ── SLIDE 1: TITLE ────────────────────────────────────────────────────────
+    // ── SLIDE 1 ───────────────────────────────────────────────────────────────
     function Slide1() {
       return (
-        <div style={{ ...slide, background: BURG }}>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 8, background: BURG_L }} />
+        <div style={{ ...base, background: BURG }}>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 6, background: BURG_L }} />
           <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "48px 72px" }}>
-            <div style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: MGRAY, fontFamily: "Arial, sans-serif", marginBottom: 28 }}>
+            <div style={{ fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", color: MGRAY, fontFamily: "Arial, sans-serif", marginBottom: 24 }}>
               Town of Arlington · Annual Town Meeting · May 6, 2026
             </div>
-            <div style={{ fontSize: 38, fontWeight: "bold", color: WHITE, lineHeight: 1.25, marginBottom: 56 }}>
+            <div style={{ fontSize: 40, fontWeight: "bold", color: WHITE, lineHeight: 1.25, marginBottom: 60 }}>
               Warrant Article 67 — Hardy School<br />HVAC Feasibility Study
             </div>
-            <div style={{
-              display: "inline-flex", flexDirection: "column",
-              background: "rgba(255,255,255,0.08)",
-              border: "1px solid rgba(255,255,255,0.15)",
-              padding: "24px 40px", borderRadius: 6, alignSelf: "flex-start",
-            }}>
-              <div style={{ fontSize: 12, letterSpacing: "0.14em", textTransform: "uppercase", color: MGRAY, fontFamily: "Arial, sans-serif", marginBottom: 10 }}>FY27 Appropriation Request</div>
-              <div style={{ fontSize: 52, color: WHITE, fontWeight: "bold", letterSpacing: "-0.01em" }}>$375,000</div>
+            <div style={{ fontSize: 14, letterSpacing: "0.12em", textTransform: "uppercase", color: MGRAY, fontFamily: "Arial, sans-serif", marginBottom: 16 }}>
+              FY27 Appropriation Request
+            </div>
+            <div style={{ fontSize: 72, fontWeight: "bold", color: WHITE, lineHeight: 1, letterSpacing: "-0.02em" }}>
+              $375,000
             </div>
           </div>
-          <div style={{ padding: "14px 72px", borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: 12, color: "rgba(255,255,255,0.3)", fontFamily: "Arial, sans-serif" }}>
+          <div style={{ padding: "14px 72px", borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: 12, color: "rgba(255,255,255,0.25)", fontFamily: "Arial, sans-serif" }}>
             School Committee · Department of Public Facilities
           </div>
         </div>
       );
     }
 
-    // ── SLIDE 2: THE PROBLEM ──────────────────────────────────────────────────
+    // ── SLIDE 2 ───────────────────────────────────────────────────────────────
     function Slide2() {
       const equipment = [
-        { icon: "⊙", label: "10 Rooftop HVAC Units" },
-        { icon: "⊙", label: "2 Boilers" },
-        { icon: "⊙", label: "Building Management System" },
-        { icon: "⊙", label: "75 In-Classroom Radiators" },
+        "10 Rooftop HVAC Units",
+        "2 Boilers",
+        "Building Management System",
+        "75 In-Classroom Radiators",
       ];
       return (
-        <div style={{ ...slide, background: OFF_WHITE }}>
+        <div style={{ ...base, background: OFFWH }}>
           <Bar n={2} total={6} />
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "44px 60px", gap: 36 }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "44px 64px" }}>
 
-            {/* Top: two key statements full width */}
-            <div style={{ display: "flex", gap: 24 }}>
-              <div style={{ flex: 1, background: WHITE, border: `2px solid ${BURG}`, borderRadius: 8, padding: "24px 28px" }}>
-                <div style={{ fontSize: 22, fontWeight: "bold", color: BURG, lineHeight: 1.3 }}>
-                  Hardy's major HVAC equipment is nearing end of life — replacement is mandatory.
-                </div>
-              </div>
-              <div style={{ flex: 1, background: WHITE, border: `1px solid #D1D5DB`, borderRadius: 8, padding: "24px 28px" }}>
-                <div style={{ fontSize: 22, fontWeight: "bold", color: BURG, lineHeight: 1.3 }}>
-                  Tonight's vote funds a study. A construction vote returns to Town Meeting in Spring 2027.
-                </div>
-              </div>
+            {/* Main message */}
+            <div style={{ fontSize: 34, fontWeight: "bold", color: BURG, lineHeight: 1.25, marginBottom: 28 }}>
+              Hardy's major HVAC equipment is nearing end of life.
             </div>
 
-            {/* Bottom: equipment list */}
+            {/* Bullet points */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 16, marginBottom: "auto" }}>
+              {[
+                "Replacement is mandatory — the only question is how.",
+                "Tonight's vote authorizes a study. Construction requires a second vote at Town Meeting in Spring 2027.",
+              ].map((pt, i) => (
+                <div key={i} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+                  <div style={{
+                    width: 10, height: 10, borderRadius: "50%",
+                    background: BURG, flexShrink: 0, marginTop: 10,
+                  }} />
+                  <div style={{ fontSize: 22, color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.5 }}>{pt}</div>
+                </div>
+              ))}
+            </div>
+
+            {/* Equipment chips */}
             <div>
-              <div style={{ fontSize: 12, fontFamily: "Arial, sans-serif", fontWeight: "bold", letterSpacing: "0.12em", textTransform: "uppercase", color: MGRAY, marginBottom: 16 }}>
+              <div style={{ fontSize: 11, fontFamily: "Arial, sans-serif", fontWeight: "bold", letterSpacing: "0.14em", textTransform: "uppercase", color: MGRAY, marginBottom: 14 }}>
                 Equipment Requiring Replacement
               </div>
-              <div style={{ display: "flex", gap: 16 }}>
+              <div style={{ display: "flex", gap: 12 }}>
                 {equipment.map((e, i) => (
                   <div key={i} style={{
-                    flex: 1, background: WHITE, border: `1px solid #E5E7EB`,
-                    borderLeft: `4px solid ${BURG}`,
-                    borderRadius: 6, padding: "18px 20px",
-                    display: "flex", alignItems: "center", gap: 14,
-                  }}>
-                    <div style={{
-                      width: 36, height: 36, borderRadius: "50%",
-                      background: BURG, color: WHITE,
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      fontSize: 16, flexShrink: 0,
-                    }}>✕</div>
-                    <div style={{ fontSize: 15, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.3 }}>{e.label}</div>
-                  </div>
+                    flex: 1, background: WHITE,
+                    border: `1px solid #E5E7EB`,
+                    borderTop: `4px solid ${BURG}`,
+                    borderRadius: 6, padding: "14px 16px",
+                    textAlign: "center",
+                    fontSize: 14, fontWeight: "bold",
+                    color: BURG, fontFamily: "Arial, sans-serif",
+                    lineHeight: 1.3,
+                  }}>{e}</div>
                 ))}
               </div>
             </div>
@@ -130,40 +128,40 @@
       );
     }
 
-    // ── SLIDE 3: FOUR OPTIONS ─────────────────────────────────────────────────
+    // ── SLIDE 3 ───────────────────────────────────────────────────────────────
     function Slide3() {
-      // categories: [label, gas_no_ac, gas_ac, ashp, geo]
+      // [label, gas_no_ac, gas_ac, ashp, geo]
       const cats = [
-        ["Air Conditioning",  false, true,  true,  true ],
-        ["Net Zero Aligned",  false, false, true,  true ],
-        ["MSBA Eligible",     false, false, true,  true ],
-        ["IRA Direct Pay",    false, false, false, true ],
-        ["Green School Works",false, false, false, true ],
+        ["Air Conditioning",   false, true,  true,  true ],
+        ["Net Zero Aligned",   false, false, true,  true ],
+        ["MSBA Eligible",      false, false, true,  true ],
+        ["IRA Direct Pay",     false, false, false, true ],
+        ["Green School Works", false, false, false, true ],
       ];
 
       const opts = [
-        { title: "Gas — No A/C",              net: "$3.97M", gross: null },
-        { title: "Gas + A/C",                 net: "$8.87M", gross: null },
-        { title: "Air Source Heat Pumps",     net: "$4.52M", gross: "$10.0M gross" },
-        { title: "Geothermal",                net: "$3.71M", gross: "$13.2M gross", best: true },
+        { title: "Gas\nNo A/C",              net: "$3.97M", sub: "no grants available" },
+        { title: "Gas +\nAir Conditioning",  net: "$8.87M", sub: "no grants available" },
+        { title: "Air Source\nHeat Pumps",   net: "$4.52M", sub: "$10.0M before grants" },
+        { title: "Geothermal",               net: "$3.71M", sub: "$13.2M before grants", best: true },
       ];
 
       return (
-        <div style={{ ...slide, background: OFF_WHITE }}>
+        <div style={{ ...base, background: OFFWH }}>
           <Bar n={3} total={6} />
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "22px 44px" }}>
-            <div style={{ fontSize: 26, fontWeight: "bold", color: BURG, marginBottom: 18, lineHeight: 1.2 }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "20px 44px" }}>
+            <div style={{ fontSize: 26, fontWeight: "bold", color: BURG, marginBottom: 16 }}>
               There are four options — each with a very different cost to Arlington.
             </div>
-
             <div style={{ display: "flex", gap: 12, flex: 1 }}>
               {opts.map((o, i) => (
                 <div key={i} style={{
                   flex: 1,
                   background: o.best ? "#F1EBE8" : WHITE,
                   border: o.best ? `2px solid ${BURG}` : "1px solid #E5E7EB",
-                  borderRadius: 8, padding: "16px 14px",
-                  display: "flex", flexDirection: "column",
+                  borderRadius: 8,
+                  padding: "18px 12px",
+                  display: "flex", flexDirection: "column", alignItems: "center",
                   position: "relative",
                   boxShadow: o.best ? "0 4px 16px rgba(94,19,21,0.15)" : "none",
                 }}>
@@ -171,41 +169,43 @@
                     <div style={{
                       position: "absolute", top: -12, left: "50%", transform: "translateX(-50%)",
                       background: BURG, color: WHITE, fontSize: 9, fontWeight: "bold",
-                      letterSpacing: "0.12em", textTransform: "uppercase",
+                      letterSpacing: "0.1em", textTransform: "uppercase",
                       padding: "3px 12px", borderRadius: 10,
                       fontFamily: "Arial, sans-serif", whiteSpace: "nowrap",
-                    }}>Lowest Cost to Arlington</div>
+                    }}>Lowest Cost</div>
                   )}
 
-                  {/* Title */}
-                  <div style={{ fontSize: 14, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.3, marginBottom: 12, minHeight: 38 }}>{o.title}</div>
+                  {/* Option title — centered, big */}
+                  <div style={{
+                    fontSize: 17, fontWeight: "bold", color: BURG,
+                    fontFamily: "Arial, sans-serif", lineHeight: 1.3,
+                    textAlign: "center", marginBottom: 14,
+                    whiteSpace: "pre-line", minHeight: 46,
+                  }}>{o.title}</div>
 
-                  {/* Cost block */}
-                  <div style={{ marginBottom: 14 }}>
-                    <div style={{ fontSize: 10, fontFamily: "Arial, sans-serif", color: DGRAY, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2 }}>Cost to Arlington</div>
-                    <div style={{ fontSize: 32, fontWeight: "bold", color: BURG, lineHeight: 1 }}>{o.net}</div>
-                    {o.gross
-                      ? <div style={{ fontSize: 11, color: MGRAY, fontFamily: "Arial, sans-serif", marginTop: 3 }}>{o.gross} before grants</div>
-                      : <div style={{ fontSize: 11, color: MGRAY, fontFamily: "Arial, sans-serif", marginTop: 3 }}>no grants available</div>
-                    }
+                  {/* Cost — centered, big */}
+                  <div style={{ textAlign: "center", marginBottom: 4 }}>
+                    <div style={{ fontSize: 11, fontFamily: "Arial, sans-serif", color: MGRAY, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: 2 }}>Cost to Arlington</div>
+                    <div style={{ fontSize: 34, fontWeight: "bold", color: BURG, lineHeight: 1 }}>{o.net}</div>
+                    <div style={{ fontSize: 11, color: MGRAY, fontFamily: "Arial, sans-serif", marginTop: 3 }}>{o.sub}</div>
                   </div>
 
-                  <div style={{ height: 1, background: "#E5E7EB", marginBottom: 12 }} />
+                  <div style={{ height: 1, background: "#E5E7EB", margin: "14px 0", width: "100%" }} />
 
-                  {/* Categories */}
-                  <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
+                  {/* Categories — text only, green bold if yes, grey if no */}
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8, width: "100%", alignItems: "center" }}>
                     {cats.map(([label, ...vals]) => {
                       const val = vals[i];
                       return (
-                        <div key={label} style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                          <div style={{
-                            width: 20, height: 20, borderRadius: 4, flexShrink: 0,
-                            background: val ? GREEN : "#FEE2E2",
-                            border: `1px solid ${val ? "#6EE7B7" : "#FCA5A5"}`,
-                            display: "flex", alignItems: "center", justifyContent: "center",
-                            fontSize: 11, color: val ? WHITE : RED, fontWeight: "bold",
-                          }}>{val ? "✓" : "✗"}</div>
-                          <span style={{ fontSize: 11, color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.3 }}>{label}</span>
+                        <div key={label} style={{
+                          fontSize: 12, fontFamily: "Arial, sans-serif",
+                          fontWeight: val ? "bold" : "normal",
+                          color: val ? GREEN : MGRAY,
+                          textAlign: "center",
+                          textDecoration: val ? "none" : "none",
+                          lineHeight: 1.3,
+                        }}>
+                          {val ? "✓ " : ""}{label}
                         </div>
                       );
                     })}
@@ -218,153 +218,137 @@
       );
     }
 
-    // ── SLIDE 4: VOTE NO ──────────────────────────────────────────────────────
+    // ── SLIDE 4 ───────────────────────────────────────────────────────────────
     function Slide4() {
       const points = [
-        {
-          heading: "Replacement happens anyway — possibly as an emergency",
-          body: "The equipment will continue to fail. Without planning, the Town faces emergency replacements under time pressure, with additional emergency repair costs on top.",
-        },
-        {
-          heading: "The opportunity for major grants disappears",
-          body: "MSBA, IRA Direct Pay, MassSave, Climate Leaders, and Green School Works all require advance planning. Emergency gas replacements qualify for none of them.",
-        },
-        {
-          heading: "Arlington's Net Zero goals take a significant setback",
-          body: "Hardy represents one of the largest remaining opportunities for municipal electrification. A no vote forfeits that opportunity — likely permanently.",
-        },
+        "Replacement will be needed regardless — potentially as a costly emergency",
+        "Arlington misses a once-in-a-generation opportunity for major grants",
+        "Arlington's Net Zero commitments take a significant, likely permanent setback",
       ];
       return (
-        <div style={{ ...slide, background: OFF_WHITE }}>
+        <div style={{ ...base, background: OFFWH }}>
           <Bar n={4} total={6} />
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "40px 60px", gap: 28 }}>
-            <div style={{ fontSize: 32, fontWeight: "bold", color: BURG, lineHeight: 1.2 }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "44px 64px", gap: 0 }}>
+
+            <div style={{ fontSize: 32, fontWeight: "bold", color: BURG, marginBottom: 36 }}>
               The impact of a NO vote.
             </div>
-            <div style={{ display: "flex", gap: 20 }}>
-              {points.map((p, i) => (
-                <div key={i} style={{
-                  flex: 1,
-                  background: WHITE,
-                  border: `1px solid #E5E7EB`,
-                  borderTop: `5px solid ${BURG}`,
-                  borderRadius: 6,
-                  padding: "24px 22px",
-                }}>
-                  <div style={{ fontSize: 16, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.4, marginBottom: 12 }}>{p.heading}</div>
-                  <div style={{ fontSize: 13, color: DGRAY, fontFamily: "Arial, sans-serif", lineHeight: 1.7 }}>{p.body}</div>
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 20, marginBottom: 40 }}>
+              {points.map((pt, i) => (
+                <div key={i} style={{ display: "flex", gap: 20, alignItems: "center" }}>
+                  <div style={{
+                    width: 44, height: 44, borderRadius: "50%",
+                    background: BURG, color: WHITE, flexShrink: 0,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    fontSize: 20, fontWeight: "bold", fontFamily: "Arial, sans-serif",
+                  }}>{i + 1}</div>
+                  <div style={{ fontSize: 22, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.4 }}>{pt}</div>
                 </div>
               ))}
             </div>
-            <div style={{ background: WHITE, border: `1px solid #D1D5DB`, borderRadius: 6, padding: "16px 22px", fontSize: 15, color: BURG, fontFamily: "Arial, sans-serif" }}>
-              This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to determine the smartest path — and preserve every available option.
+
+            <div style={{ borderTop: `3px solid ${BURG}`, paddingTop: 24 }}>
+              <div style={{ fontSize: 20, color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.5 }}>
+                This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to determine the smartest path — and preserve every available option.
+              </div>
             </div>
+
           </div>
         </div>
       );
     }
 
-    // ── SLIDE 5: TIMELINE (3 steps only) ─────────────────────────────────────
+    // ── SLIDE 5 ───────────────────────────────────────────────────────────────
     function Slide5() {
       const steps = [
-        {
-          phase: "Tonight — May 6, 2026",
-          title: "Town Meeting Vote",
-          desc: "Article #67 approved: $375,000 feasibility study authorized. Engineers are engaged to evaluate Hardy School and identify the optimal HVAC approach.",
-          active: true,
-        },
-        {
-          phase: "FY2027 — Summer through Fall 2026",
-          title: "Feasibility Study",
-          desc: "Engineers assess the building, confirm system type, and produce schematic design with refined cost estimates. Grant applications are prepared in parallel.",
-        },
-        {
-          phase: "Spring 2027 — Annual Town Meeting",
-          title: "Construction Vote",
-          desc: "Full study results are returned to Town Meeting. A second vote is required to appropriate construction funds. No system is committed until this vote.",
-        },
+        { date: "May 6, 2026",    action: "Town Meeting votes YES on Article 67", active: true },
+        { date: "Summer 2026",    action: "Feasibility study begins" },
+        { date: "Spring 2027",    action: "Construction vote at Town Meeting" },
       ];
       return (
-        <div style={{ ...slide, background: WHITE }}>
+        <div style={{ ...base, background: WHITE }}>
           <Bar n={5} total={6} />
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "36px 60px" }}>
-            <div style={{ fontSize: 30, fontWeight: "bold", color: BURG, marginBottom: 8 }}>
-              Tonight starts a deliberate process.
-            </div>
-            <div style={{ fontSize: 15, color: DGRAY, fontFamily: "Arial, sans-serif", marginBottom: 36 }}>
-              No system is selected tonight. Town Meeting votes again on construction in Spring 2027.
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "44px 72px", gap: 0 }}>
+
+            <div style={{ fontSize: 30, fontWeight: "bold", color: BURG, marginBottom: 52 }}>
+              Tonight starts a deliberate process.<br />
+              <span style={{ fontSize: 20, fontWeight: "normal", color: MGRAY, fontFamily: "Arial, sans-serif" }}>No system is selected tonight. Construction requires a second vote.</span>
             </div>
 
-            <div style={{ display: "flex", flex: 1, gap: 0, alignItems: "stretch" }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 0 }}>
               {steps.map((s, i) => (
-                <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
-                  {/* Connector row */}
-                  <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 20 }}>
-                    <div style={{ flex: 1, height: 3, background: i === 0 ? "transparent" : "#E5E7EB" }} />
+                <div key={i} style={{ display: "flex", alignItems: "stretch", marginBottom: i < steps.length - 1 ? 0 : 0 }}>
+                  {/* Left: circle + line */}
+                  <div style={{ width: 60, display: "flex", flexDirection: "column", alignItems: "center" }}>
                     <div style={{
-                      width: 52, height: 52, borderRadius: "50%", flexShrink: 0,
+                      width: 48, height: 48, borderRadius: "50%", flexShrink: 0,
                       background: s.active ? BURG : LGRAY,
-                      border: s.active ? `none` : `2px solid #D1D5DB`,
+                      border: s.active ? "none" : `2px solid #D1D5DB`,
                       display: "flex", alignItems: "center", justifyContent: "center",
-                      color: s.active ? WHITE : DGRAY,
+                      color: s.active ? WHITE : MGRAY,
                       fontWeight: "bold", fontSize: 20, fontFamily: "Arial, sans-serif",
-                      boxShadow: s.active ? "0 0 0 6px rgba(94,19,21,0.15)" : "none",
                     }}>{i + 1}</div>
-                    <div style={{ flex: 1, height: 3, background: i === steps.length - 1 ? "transparent" : "#E5E7EB" }} />
+                    {i < steps.length - 1 && (
+                      <div style={{ width: 3, flex: 1, background: "#E5E7EB", minHeight: 32 }} />
+                    )}
                   </div>
 
-                  {/* Card */}
-                  <div style={{
-                    width: "88%",
-                    background: s.active ? "#F1EBE8" : LGRAY,
-                    border: s.active ? `2px solid ${BURG}` : "1px solid #E5E7EB",
-                    borderRadius: 8, padding: "20px 18px", flex: 1,
-                  }}>
-                    <div style={{ fontSize: 11, fontFamily: "Arial, sans-serif", color: s.active ? BURG_L : MGRAY, fontWeight: "bold", letterSpacing: "0.04em", marginBottom: 8 }}>{s.phase}</div>
-                    <div style={{ fontSize: 18, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", marginBottom: 10 }}>{s.title}</div>
-                    <div style={{ fontSize: 13, color: DGRAY, fontFamily: "Arial, sans-serif", lineHeight: 1.65 }}>{s.desc}</div>
+                  {/* Right: content */}
+                  <div style={{ flex: 1, paddingLeft: 24, paddingBottom: i < steps.length - 1 ? 36 : 0, display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
+                    <div style={{ fontSize: 14, fontFamily: "Arial, sans-serif", color: MGRAY, marginBottom: 4, marginTop: 10 }}>{s.date}</div>
+                    <div style={{ fontSize: 26, fontWeight: "bold", color: BURG, fontFamily: "Arial, sans-serif", lineHeight: 1.3 }}>{s.action}</div>
                   </div>
                 </div>
               ))}
             </div>
+
           </div>
         </div>
       );
     }
 
-    // ── SLIDE 6: THE ASK ──────────────────────────────────────────────────────
+    // ── SLIDE 6 ───────────────────────────────────────────────────────────────
     function Slide6() {
+      const reasons = [
+        "Preserves eligibility for MSBA, IRA Direct Pay, MassSave, Climate Leaders, and Green School Works grants",
+        "Returns to Town Meeting in Spring 2027 with a full design and cost picture — no construction is authorized tonight",
+        "Positions Hardy School for air conditioning and long-term Net Zero alignment",
+        "Avoids a costlier, unplanned emergency gas replacement with no offsets",
+      ];
       return (
-        <div style={{ ...slide, background: BURG }}>
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 8, background: BURG_L }} />
-          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "52px 72px" }}>
-            <div style={{ fontSize: 15, letterSpacing: "0.06em", textTransform: "uppercase", color: MGRAY, fontFamily: "Arial, sans-serif", marginBottom: 24 }}>
-              Warrant Article 67
-            </div>
-            <div style={{ fontSize: 36, fontWeight: "bold", color: WHITE, lineHeight: 1.3, marginBottom: 40, maxWidth: 680 }}>
+        <div style={{ ...base, background: BURG }}>
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 6, background: BURG_L }} />
+
+          {/* Top third: title */}
+          <div style={{
+            borderBottom: "1px solid rgba(255,255,255,0.15)",
+            padding: "36px 64px",
+            display: "flex", alignItems: "center",
+          }}>
+            <div style={{ fontSize: 28, fontWeight: "bold", color: WHITE, lineHeight: 1.35 }}>
               A YES vote will authorize $375,000 for a feasibility study to determine the best path for Hardy School's HVAC replacement.
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-              {[
-                "Preserves eligibility for MSBA reimbursement, IRA Direct Pay, and all available grants",
-                "Returns to Town Meeting in Spring 2027 with a full design and cost picture before any construction is authorized",
-                "Positions Hardy School for air conditioning and long-term Net Zero alignment",
-                "Avoids a costlier, unplanned emergency gas replacement with no offsets",
-              ].map((pt, i) => (
-                <div key={i} style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
-                  <div style={{
-                    width: 28, height: 28, borderRadius: "50%",
-                    background: "rgba(255,255,255,0.15)",
-                    border: "1px solid rgba(255,255,255,0.25)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    flexShrink: 0, color: WHITE, fontWeight: "bold", fontSize: 13,
-                    fontFamily: "Arial, sans-serif",
-                  }}>{i + 1}</div>
-                  <span style={{ fontSize: 16, color: "rgba(255,255,255,0.85)", fontFamily: "Arial, sans-serif", lineHeight: 1.6, paddingTop: 2 }}>{pt}</span>
-                </div>
-              ))}
-            </div>
           </div>
+
+          {/* Bottom two-thirds: reasons */}
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "28px 64px", gap: 20 }}>
+            {reasons.map((r, i) => (
+              <div key={i} style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
+                <div style={{
+                  width: 32, height: 32, borderRadius: "50%",
+                  background: "rgba(255,255,255,0.15)",
+                  border: "1px solid rgba(255,255,255,0.3)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0, color: WHITE,
+                  fontWeight: "bold", fontSize: 14, fontFamily: "Arial, sans-serif",
+                  marginTop: 2,
+                }}>{i + 1}</div>
+                <div style={{ fontSize: 17, color: "rgba(255,255,255,0.9)", fontFamily: "Arial, sans-serif", lineHeight: 1.65 }}>{r}</div>
+              </div>
+            ))}
+          </div>
+
         </div>
       );
     }
@@ -421,12 +405,12 @@
                 {SLIDES.map((_, i) => (
                   <div key={i} onClick={() => setCur(i)} style={{
                     width: i === cur ? 24 : 8, height: 8, borderRadius: 4,
-                    background: i === cur ? "rgba(255,255,255,0.7)" : "rgba(255,255,255,0.2)",
+                    background: i === cur ? "rgba(255,255,255,0.6)" : "rgba(255,255,255,0.18)",
                     cursor: "pointer", transition: "width 0.3s",
                   }} />
                 ))}
               </div>
-              <div style={{ color: "rgba(255,255,255,0.2)", fontFamily: "Arial, sans-serif", fontSize: 11 }}>
+              <div style={{ color: "rgba(255,255,255,0.18)", fontFamily: "Arial, sans-serif", fontSize: 11 }}>
                 {cur + 1} / {SLIDES.length} — {TITLES[cur]}
               </div>
             </div>

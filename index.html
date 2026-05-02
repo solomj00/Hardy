@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hardy School HVAC — Warrant Article #67</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/recharts/2.12.7/Recharts.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a0507; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useCallback } = React;
+    const { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, Legend } = Recharts;
+
+    const BURG       = "#5e1315";
+    const GOLD       = "#C9962A";
+    const GOLD_LIGHT = "#F5E6C3";
+    const WHITE      = "#FFFFFF";
+    const OFF_WHITE  = "#F8F5F2";
+    const GRAY       = "#6B7280";
+    const GREEN      = "#166534";
+    const RED        = "#991B1B";
+
+    function SlideContainer({ children, bg = WHITE }) {
+      return (
+        <div style={{
+          width: "100%", height: "100%", background: bg,
+          display: "flex", flexDirection: "column",
+          position: "relative", overflow: "hidden",
+          fontFamily: "'Georgia', serif",
+        }}>
+          {children}
+        </div>
+      );
+    }
+
+    function ProgressBar({ n, total }) {
+      return (
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 5, background: "rgba(0,0,0,0.1)" }}>
+          <div style={{ height: "100%", width: `${(n / total) * 100}%`, background: GOLD, transition: "width 0.4s" }} />
+        </div>
+      );
+    }
+
+    function Label({ children }) {
+      return (
+        <div style={{
+          fontFamily: "'Arial', sans-serif", fontSize: 10, fontWeight: "bold",
+          letterSpacing: "0.18em", textTransform: "uppercase", color: GOLD, marginBottom: 10,
+        }}>{children}</div>
+      );
+    }
+
+    function Footer({ children }) {
+      return (
+        <div style={{ background: BURG, padding: "9px 52px" }}>
+          <div style={{ fontSize: 11, color: "#C9A0A0", fontFamily: "'Arial', sans-serif" }}>{children}</div>
+        </div>
+      );
+    }
+
+    // ── 1. TITLE ──────────────────────────────────────────────────────────────
+    function Slide1() {
+      return (
+        <SlideContainer bg={BURG}>
+          <div style={{ position: "absolute", bottom: 0, right: 0, width: 360, height: 360, background: `linear-gradient(135deg, transparent 50%, ${GOLD}18 50%)` }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 6, background: GOLD }} />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "40px 60px" }}>
+            <div style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: GOLD, fontFamily: "'Arial', sans-serif", marginBottom: 22 }}>
+              Town of Arlington · Annual Town Meeting · May 6, 2026
+            </div>
+            <div style={{ fontSize: 54, fontWeight: "bold", color: WHITE, lineHeight: 1.1, marginBottom: 16 }}>
+              Hardy School<br />HVAC Replacement
+            </div>
+            <div style={{ fontSize: 20, color: "#C9A0A0", marginBottom: 48, fontStyle: "italic" }}>
+              Feasibility Study
+            </div>
+            <div style={{ display: "flex", gap: 24 }}>
+              {[["Warrant Article", "#67"], ["FY27 Request", "$375,000"]].map(([k, v]) => (
+                <div key={k} style={{
+                  background: "rgba(255,255,255,0.08)", border: `1px solid ${GOLD}55`,
+                  padding: "18px 32px", borderRadius: 4,
+                }}>
+                  <div style={{ fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "#C9A0A0", fontFamily: "'Arial', sans-serif", marginBottom: 8 }}>{k}</div>
+                  <div style={{ fontSize: 30, color: WHITE, fontWeight: "bold" }}>{v}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div style={{ padding: "12px 60px", borderTop: "1px solid rgba(255,255,255,0.1)", fontSize: 11, color: "#7A3B3D", fontFamily: "'Arial', sans-serif" }}>
+            School Committee · Department of Public Facilities
+          </div>
+        </SlideContainer>
+      );
+    }
+
+    // ── 2. THE PROBLEM ────────────────────────────────────────────────────────
+    function Slide2() {
+      const items = [
+        ["10 Rooftop HVAC Units", "Nearing end of life; units already experiencing failures"],
+        ["2 Boilers", "Beyond end of life; replacement required within 3–5 years"],
+        ["Building Mgmt System", "Must be replaced to operate any new equipment"],
+        ["75 Terminal Units", "In-classroom radiators; no cooling capacity in any room"],
+      ];
+      return (
+        <SlideContainer bg={OFF_WHITE}>
+          <ProgressBar n={2} total={6} />
+          <div style={{ flex: 1, display: "flex", padding: "34px 52px", gap: 48 }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <Label>The Problem</Label>
+              <div style={{ fontSize: 34, fontWeight: "bold", color: BURG, lineHeight: 1.2, marginBottom: 20 }}>
+                Hardy's major HVAC equipment is nearing end of life.
+              </div>
+              <div style={{ fontSize: 15, color: BURG, lineHeight: 1.8, fontFamily: "'Arial', sans-serif" }}>
+                Within 3–5 years, the Town must replace this equipment — regardless
+                of tonight's vote. The only decision is <strong>how</strong>.
+              </div>
+              <div style={{ marginTop: 24, fontSize: 15, color: BURG, lineHeight: 1.8, fontFamily: "'Arial', sans-serif" }}>
+                Tonight's vote authorizes a study to determine the best approach.
+                A construction vote returns to Town Meeting in <strong>Spring 2027</strong>.
+              </div>
+            </div>
+            <div style={{ width: 340, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", fontWeight: "bold", letterSpacing: "0.12em", textTransform: "uppercase", color: GRAY, marginBottom: 12 }}>Equipment Requiring Replacement</div>
+              {items.map(([sys, note], i) => (
+                <div key={i} style={{
+                  display: "flex", gap: 14, padding: "14px 0",
+                  borderBottom: i < items.length - 1 ? "1px solid #E5E7EB" : "none",
+                  alignItems: "flex-start",
+                }}>
+                  <div style={{ width: 8, height: 8, borderRadius: "50%", background: BURG, marginTop: 6, flexShrink: 0 }} />
+                  <div>
+                    <div style={{ fontSize: 15, fontWeight: "bold", color: BURG, fontFamily: "'Arial', sans-serif", marginBottom: 2 }}>{sys}</div>
+                    <div style={{ fontSize: 12, color: GRAY, fontFamily: "'Arial', sans-serif" }}>{note}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Footer>All estimates assume 2028–2030 construction with inflation, tariffs, and prevailing wages.</Footer>
+        </SlideContainer>
+      );
+    }
+
+    // ── 3. FOUR OPTIONS ───────────────────────────────────────────────────────
+    function Slide3() {
+      const opts = [
+        {
+          title: "Gas — No A/C",
+          net: "$3.97M", gross: "Net to Town",
+          bullets: ["100% Arlington cost", "No air conditioning", "No grants or rebates", "Leaves aging piping in place"],
+          ac: false, msba: false, nz: false,
+          bg: "#FEF2F2", border: "#E5B4B4",
+        },
+        {
+          title: "Gas + Air Conditioning",
+          net: "$8.87M", gross: "Net to Town",
+          bullets: ["100% Arlington cost", "Extremely invasive install", "No grants or rebates", "Highest gross and net cost"],
+          ac: true, msba: false, nz: false,
+          bg: "#FFFBEB", border: "#F0D080",
+        },
+        {
+          title: "Air Source Heat Pumps",
+          net: "$4.52M", gross: "$10.0M gross",
+          bullets: ["43% MSBA reimbursement", "MassSave + Climate Leaders grants", "Air conditioning included", "Net Zero aligned"],
+          ac: true, msba: true, nz: true,
+          bg: WHITE, border: "#D1D5DB",
+        },
+        {
+          title: "Geothermal",
+          net: "$3.71M", gross: "$13.2M gross",
+          bullets: ["43% MSBA reimbursement", "IRA Direct Pay + MassSave + grants", "Air conditioning included", "Lowest net cost to Arlington"],
+          ac: true, msba: true, nz: true,
+          bg: GOLD_LIGHT, border: GOLD, best: true,
+        },
+      ];
+      return (
+        <SlideContainer bg={OFF_WHITE}>
+          <ProgressBar n={3} total={6} />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "24px 44px" }}>
+            <Label>Four Options</Label>
+            <div style={{ fontSize: 26, fontWeight: "bold", color: BURG, marginBottom: 18, lineHeight: 1.2 }}>
+              After grants and MSBA reimbursement, geothermal costs less than gas.
+            </div>
+            <div style={{ display: "flex", gap: 14, flex: 1 }}>
+              {opts.map((o, i) => (
+                <div key={i} style={{
+                  flex: 1, background: o.bg, border: `2px solid ${o.border}`,
+                  borderRadius: 8, padding: "20px 18px", display: "flex", flexDirection: "column",
+                  position: "relative", boxShadow: o.best ? `0 4px 20px ${GOLD}33` : "none",
+                }}>
+                  {o.best && (
+                    <div style={{
+                      position: "absolute", top: -13, left: "50%", transform: "translateX(-50%)",
+                      background: GOLD, color: WHITE, fontSize: 9, fontWeight: "bold",
+                      letterSpacing: "0.12em", textTransform: "uppercase", padding: "3px 12px",
+                      borderRadius: 10, fontFamily: "'Arial', sans-serif", whiteSpace: "nowrap",
+                    }}>Lowest Net Cost</div>
+                  )}
+                  <div style={{ fontSize: 15, fontWeight: "bold", color: BURG, fontFamily: "'Arial', sans-serif", lineHeight: 1.3, marginBottom: 14 }}>{o.title}</div>
+                  <div style={{ marginBottom: 4 }}>
+                    <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", color: GRAY, letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 2 }}>{o.gross}</div>
+                    <div style={{ fontSize: 32, fontWeight: "bold", color: BURG, lineHeight: 1 }}>{o.net}</div>
+                    <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", color: GRAY }}>net to Arlington</div>
+                  </div>
+                  <div style={{ height: 1, background: o.border, margin: "14px 0" }} />
+                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                    {o.bullets.map((b, j) => (
+                      <div key={j} style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
+                        <span style={{ color: i >= 2 ? GREEN : BURG, fontSize: 12, flexShrink: 0, marginTop: 1 }}>{i >= 2 ? "✓" : "–"}</span>
+                        <span style={{ fontSize: 12, color: BURG, fontFamily: "'Arial', sans-serif", lineHeight: 1.4 }}>{b}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", gap: 6, marginTop: "auto", paddingTop: 14, flexWrap: "wrap" }}>
+                    {[["A/C", o.ac], ["MSBA", o.msba], ["Net Zero", o.nz]].map(([label, val]) => (
+                      <div key={label} style={{
+                        background: val ? (o.best ? GOLD + "33" : "#D1FAE5") : "#FEE2E2",
+                        border: `1px solid ${val ? (o.best ? GOLD : "#6EE7B7") : "#FCA5A5"}`,
+                        borderRadius: 3, padding: "2px 7px",
+                        fontSize: 10, fontFamily: "'Arial', sans-serif", fontWeight: "bold",
+                        color: val ? (o.best ? BURG : GREEN) : RED,
+                      }}>{label} {val ? "✓" : "✗"}</div>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Footer>Net costs reflect MSBA (43%), IRA Direct Pay, MassSave, and Climate Leaders grants. Gas options qualify for none.</Footer>
+        </SlideContainer>
+      );
+    }
+
+    // ── 4. VOTE NO ────────────────────────────────────────────────────────────
+    function Slide4() {
+      const consequences = [
+        ["Equipment keeps failing", "Emergency replacement becomes likely — no planning, no grants, no A/C"],
+        ["Highest net cost", "Gas at $3.97–8.87M (100% town) vs. $3.71M geothermal net"],
+        ["MSBA window closes", "MSBA requires advance planning — emergency replacements don't qualify"],
+        ["Net Zero setback", "Arlington forfeits a major municipal decarbonization opportunity"],
+      ];
+      return (
+        <SlideContainer bg={OFF_WHITE}>
+          <ProgressBar n={4} total={6} />
+          <div style={{ flex: 1, display: "flex", padding: "34px 52px", gap: 48 }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <Label>If This Article Fails</Label>
+              <div style={{ fontSize: 34, fontWeight: "bold", color: BURG, lineHeight: 1.2, marginBottom: 20 }}>
+                The cost doesn't go away — it just gets worse.
+              </div>
+              <div style={{ fontSize: 15, color: BURG, lineHeight: 1.8, fontFamily: "'Arial', sans-serif" }}>
+                A NO vote doesn't defer the problem — it defers the planning.
+                Hardy's equipment continues to degrade. Within a few years, the Town
+                makes emergency replacements under time pressure: gas, full town cost,
+                no grants, no air conditioning.
+              </div>
+              <div style={{ marginTop: 24, background: GOLD_LIGHT, border: `1px solid ${GOLD}`, borderRadius: 6, padding: "14px 18px", fontSize: 14, color: BURG, fontFamily: "'Arial', sans-serif" }}>
+                This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to
+                find the smartest path — and avoid a costlier, worse outcome.
+              </div>
+            </div>
+            <div style={{ width: 340, display: "flex", flexDirection: "column", justifyContent: "center", gap: 12 }}>
+              <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", fontWeight: "bold", letterSpacing: "0.12em", textTransform: "uppercase", color: GRAY, marginBottom: 4 }}>Voting NO means:</div>
+              {consequences.map(([title, desc], i) => (
+                <div key={i} style={{
+                  background: "#FEF2F2", border: "1px solid #E5B4B4",
+                  borderLeft: `4px solid ${BURG}`, borderRadius: 4, padding: "12px 16px",
+                }}>
+                  <div style={{ fontSize: 14, fontWeight: "bold", color: BURG, fontFamily: "'Arial', sans-serif", marginBottom: 4 }}>{title}</div>
+                  <div style={{ fontSize: 12, color: BURG, fontFamily: "'Arial', sans-serif", lineHeight: 1.5 }}>{desc}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Footer>Gas replacement is not a low-cost option — it is the highest net cost once grants and reimbursements are applied to electrification.</Footer>
+        </SlideContainer>
+      );
+    }
+
+    // ── 5. TIMELINE ───────────────────────────────────────────────────────────
+    function Slide5() {
+      const steps = [
+        { phase: "Tonight", date: "May 6, 2026", title: "Town Meeting Vote", desc: "Article #67: $375K feasibility study authorized", active: true },
+        { phase: "FY2027", date: "Summer–Fall 2026", title: "Feasibility Study", desc: "Engineers confirm system type, produce schematic design and refined cost estimates" },
+        { phase: "Spring 2027", date: "May 2027", title: "Construction Vote", desc: "Full results returned to Town Meeting — second vote required for construction" },
+        { phase: "FY2028", date: "Summer 2027", title: "Design & MSBA", desc: "MSBA enrollment finalized; design development begins" },
+        { phase: "FY2029", date: "2028–2029", title: "Construction", desc: "Hardy School has modern, efficient, fully climate-controlled HVAC", done: true },
+      ];
+      return (
+        <SlideContainer bg={WHITE}>
+          <ProgressBar n={5} total={6} />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "30px 52px" }}>
+            <Label>Project Timeline</Label>
+            <div style={{ fontSize: 30, fontWeight: "bold", color: BURG, marginBottom: 8 }}>
+              Tonight starts a deliberate process.
+            </div>
+            <div style={{ fontSize: 14, color: BURG, fontFamily: "'Arial', sans-serif", marginBottom: 30, opacity: 0.7 }}>
+              Town Meeting votes again on construction in Spring 2027. No system is selected until then.
+            </div>
+            <div style={{ display: "flex", flex: 1, alignItems: "flex-start" }}>
+              {steps.map((s, i) => (
+                <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center", width: "100%", marginBottom: 16 }}>
+                    <div style={{ flex: 1, height: 2, background: i === 0 ? "transparent" : "#E5E7EB" }} />
+                    <div style={{
+                      width: 40, height: 40, borderRadius: "50%", flexShrink: 0,
+                      background: s.active ? GOLD : s.done ? GREEN : BURG,
+                      display: "flex", alignItems: "center", justifyContent: "center",
+                      color: WHITE, fontWeight: "bold", fontSize: 15, fontFamily: "'Arial', sans-serif",
+                      boxShadow: s.active ? `0 0 0 5px ${GOLD}44` : "none",
+                    }}>{i + 1}</div>
+                    <div style={{ flex: 1, height: 2, background: i === steps.length - 1 ? "transparent" : "#E5E7EB" }} />
+                  </div>
+                  <div style={{
+                    textAlign: "center", width: "92%",
+                    background: s.active ? GOLD_LIGHT : OFF_WHITE,
+                    border: `1px solid ${s.active ? GOLD : "#E5E7EB"}`,
+                    borderRadius: 6, padding: "12px 10px",
+                  }}>
+                    <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", fontWeight: "bold", letterSpacing: "0.1em", textTransform: "uppercase", color: s.active ? GOLD : s.done ? GREEN : BURG, marginBottom: 2 }}>{s.phase}</div>
+                    <div style={{ fontSize: 10, color: GRAY, fontFamily: "'Arial', sans-serif", marginBottom: 6 }}>{s.date}</div>
+                    <div style={{ fontSize: 13, fontWeight: "bold", color: BURG, fontFamily: "'Arial', sans-serif", marginBottom: 4 }}>{s.title}</div>
+                    <div style={{ fontSize: 11, color: BURG, fontFamily: "'Arial', sans-serif", lineHeight: 1.4, opacity: 0.8 }}>{s.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          <Footer>The feasibility study determines which system is optimal — no commitment to a specific approach until Spring 2027.</Footer>
+        </SlideContainer>
+      );
+    }
+
+    // ── 6. THE ASK ────────────────────────────────────────────────────────────
+    function Slide6() {
+      return (
+        <SlideContainer bg={BURG}>
+          <div style={{ position: "absolute", top: 0, right: 0, width: 420, height: 420, background: `linear-gradient(225deg, ${GOLD}14, transparent 60%)` }} />
+          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 6, background: GOLD }} />
+          <div style={{ flex: 1, display: "flex", padding: "44px 60px", gap: 56 }}>
+            <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div style={{ fontSize: 10, letterSpacing: "0.2em", textTransform: "uppercase", color: GOLD, fontFamily: "'Arial', sans-serif", marginBottom: 18 }}>
+                Warrant Article #67 · The Ask
+              </div>
+              <div style={{ fontSize: 56, fontWeight: "bold", color: WHITE, lineHeight: 1.1, marginBottom: 20 }}>Vote YES.</div>
+              <div style={{ fontSize: 18, color: "#C9A0A0", marginBottom: 32, lineHeight: 1.6 }}>
+                Authorize <strong style={{ color: WHITE }}>$375,000</strong> for a feasibility
+                study to determine the best path for Hardy School HVAC replacement.
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                {[
+                  "Keeps MSBA reimbursement and grant eligibility alive",
+                  "Returns to Town Meeting in Spring 2027 with a full cost picture",
+                  "Delivers air conditioning and a net-zero aligned building",
+                  "Avoids a costlier emergency gas replacement later",
+                ].map((pt, i) => (
+                  <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start" }}>
+                    <span style={{ color: GOLD, fontSize: 16, flexShrink: 0 }}>✓</span>
+                    <span style={{ fontSize: 14, color: "#D4B8B8", fontFamily: "'Arial', sans-serif", lineHeight: 1.5 }}>{pt}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 280, display: "flex", flexDirection: "column", gap: 16, justifyContent: "center" }}>
+              <div style={{ background: "rgba(255,255,255,0.07)", border: `1px solid ${GOLD}66`, borderRadius: 8, padding: "24px" }}>
+                <div style={{ fontSize: 10, letterSpacing: "0.12em", textTransform: "uppercase", color: GOLD, fontFamily: "'Arial', sans-serif", marginBottom: 10 }}>Tonight's Request</div>
+                <div style={{ fontSize: 48, fontWeight: "bold", color: WHITE }}>$375K</div>
+                <div style={{ fontSize: 13, color: "#C9A0A0", fontFamily: "'Arial', sans-serif", marginTop: 4 }}>Feasibility Study · FY27</div>
+              </div>
+              <div style={{ fontSize: 10, fontFamily: "'Arial', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", color: "#7A3B3D", marginBottom: 2 }}>Most Likely Net Cost to Arlington</div>
+              {[
+                { label: "Geothermal", val: "$3.71M", note: "Lowest net cost", best: true },
+                { label: "Air Source HP", val: "$4.52M", note: "Second option" },
+                { label: "Gas + A/C", val: "$8.87M", note: "Zero grants eligible" },
+              ].map((item, i) => (
+                <div key={i} style={{
+                  display: "flex", justifyContent: "space-between", alignItems: "center",
+                  background: item.best ? `${GOLD}22` : "rgba(255,255,255,0.05)",
+                  border: `1px solid ${item.best ? GOLD + "66" : "rgba(255,255,255,0.08)"}`,
+                  borderRadius: 4, padding: "10px 14px",
+                }}>
+                  <div>
+                    <div style={{ fontSize: 13, color: WHITE, fontFamily: "'Arial', sans-serif", fontWeight: "bold" }}>{item.label}</div>
+                    <div style={{ fontSize: 10, color: "#7A3B3D", fontFamily: "'Arial', sans-serif" }}>{item.note}</div>
+                  </div>
+                  <div style={{ fontSize: 22, fontWeight: "bold", color: item.best ? GOLD : "#C9A0A0" }}>{item.val}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </SlideContainer>
+      );
+    }
+
+    const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6];
+    const TITLES = ["Title", "The Problem", "Four Options", "If We Vote No", "Timeline", "The Ask"];
+
+    function App() {
+      const [cur, setCur] = useState(0);
+      const prev = useCallback(() => setCur(c => Math.max(0, c - 1)), []);
+      const next = useCallback(() => setCur(c => Math.min(SLIDES.length - 1, c + 1)), []);
+
+      useEffect(() => {
+        const h = e => {
+          if (e.key === "ArrowRight" || e.key === "ArrowDown") next();
+          if (e.key === "ArrowLeft"  || e.key === "ArrowUp")   prev();
+        };
+        window.addEventListener("keydown", h);
+        return () => window.removeEventListener("keydown", h);
+      }, [next, prev]);
+
+      const S = SLIDES[cur];
+
+      return (
+        <div style={{
+          background: "#1a0507", minHeight: "100vh",
+          display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: 16,
+        }}>
+          <div style={{ width: "100%", maxWidth: 920, aspectRatio: "16/9", boxShadow: "0 20px 60px rgba(0,0,0,0.6)", borderRadius: 4, overflow: "hidden" }}>
+            <S />
+          </div>
+
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", maxWidth: 920, marginTop: 14 }}>
+            <button onClick={prev} disabled={cur === 0} style={{
+              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+              color: WHITE, padding: "7px 20px", borderRadius: 4, cursor: cur === 0 ? "not-allowed" : "pointer",
+              fontFamily: "'Arial', sans-serif", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase",
+              opacity: cur === 0 ? 0.3 : 1,
+            }}>← Prev</button>
+
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+              <div style={{ display: "flex", gap: 6 }}>
+                {SLIDES.map((_, i) => (
+                  <div key={i} onClick={() => setCur(i)} style={{
+                    width: i === cur ? 24 : 8, height: 8, borderRadius: 4,
+                    background: i === cur ? GOLD : "rgba(255,255,255,0.2)",
+                    cursor: "pointer", transition: "all 0.3s",
+                  }} />
+                ))}
+              </div>
+              <div style={{ color: "#6B3B3D", fontFamily: "'Arial', sans-serif", fontSize: 11 }}>
+                {cur + 1} / {SLIDES.length} — {TITLES[cur]}
+              </div>
+            </div>
+
+            <button onClick={next} disabled={cur === SLIDES.length - 1} style={{
+              background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)",
+              color: WHITE, padding: "7px 20px", borderRadius: 4, cursor: cur === SLIDES.length - 1 ? "not-allowed" : "pointer",
+              fontFamily: "'Arial', sans-serif", fontSize: 12, letterSpacing: "0.06em", textTransform: "uppercase",
+              opacity: cur === SLIDES.length - 1 ? 0.3 : 1,
+            }}>Next →</button>
+          </div>
+          <div style={{ marginTop: 8, color: "#4a2022", fontFamily: "'Arial', sans-serif", fontSize: 11 }}>← → arrow keys to navigate</div>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

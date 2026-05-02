@@ -146,7 +146,7 @@
         <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 7, background: BURG2 }} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "48px 80px" }}>
           <div style={{ fontFamily: SS, fontSize: 13, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(255,255,255,0.45)", marginBottom: 26 }}>
-            Town of Arlington · Annual Town Meeting · May 6, 2026
+            Town of Arlington · Annual Town Meeting · May X, 2026
           </div>
           <div style={{ fontFamily: PF, fontSize: 44, color: WHITE, lineHeight: 1.2, marginBottom: 60 }}>
             Warrant Article 67 —<br />Hardy School HVAC Feasibility Study
@@ -169,12 +169,13 @@
         <Bar n={2} total={6} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "48px 72px" }}>
           <div style={{ fontFamily: PF, fontSize: 36, color: BURG, lineHeight: 1.25, marginBottom: 30 }}>
-            Hardy's HVAC is nearing end of life.<br />Replacement is mandatory.
+            Hardy's HVAC is nearing end of life.
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: "auto" }}>
             {[
-              "The only question before Town Meeting is how — not whether.",
-              "Tonight's vote funds a study. Construction requires a separate vote at Town Meeting in Spring 2027.",
+              "Article 67 appropriates $375k to fund a study & schematic design(?) to make the best decision for the town.",
+              "The town will recieve a 43% rebate (~$161,250) due to our accepatnce into the MSBA Accelerated Repair Program.",
+              "Town Meeting will vote, likely next year, on the construction project.  Tonight's vote is only on the study."
             ].map((pt, i) => (
               <div key={i} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
                 <div style={{ width: 11, height: 11, borderRadius: "50%", background: BURG, flexShrink: 0, marginTop: 9 }} />

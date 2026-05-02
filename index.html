@@ -10,8 +10,24 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; background: #1a0507; }
-    #root { width: 100%; height: 100%; }
+    
+    /* Use Flexbox on the body to cleanly separate the stage area from the nav */
+    html, body { 
+      width: 100%; 
+      height: 100%; 
+      overflow: hidden; 
+      background: #1a0507; 
+      display: flex;
+      flex-direction: column;
+    }
+    
+    /* The wrapper fills all space above the nav bar */
+    #stage-wrapper {
+      flex: 1;
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+    }
 
     #stage {
       position: absolute;
@@ -19,28 +35,29 @@
       left: 50%;
       width: 960px;
       height: 540px;
-      transform-origin: top left;
+      /* REMOVED: transform-origin: top left; -> Letting it default to center fixes the scaling math */
       /* transform set by JS */
     }
 
     #nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
+      /* REMOVED: position: fixed; -> Flexbox naturally keeps this at the bottom */
+      flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 20px;
+      padding: 12px 20px; /* Slightly taller padding for mobile thumbs */
       z-index: 100;
+      background: #1a0507;
     }
 
     .nav-btn {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
       color: #fff;
-      padding: 6px 18px;
-      border-radius: 4px;
+      padding: 10px 20px; /* Increased touch target for mobile */
+      border-radius: 6px;
       font-family: 'Source Sans 3', sans-serif;
-      font-size: 12px;
+      font-size: 13px;
       letter-spacing: 0.08em;
       text-transform: uppercase;
       cursor: pointer;
@@ -48,45 +65,56 @@
     .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
 
     .dot {
-      height: 8px; border-radius: 4px;
+      height: 12px; /* Increased from 8px for mobile tap targets */
+      border-radius: 6px;
       background: rgba(255,255,255,0.2);
-      cursor: pointer; transition: width 0.25s;
+      cursor: pointer; 
+      transition: width 0.25s;
       display: inline-block;
     }
     .dot.active { background: rgba(255,255,255,0.65); }
   </style>
 </head>
 <body>
-<div id="root"></div>
+
+<div id="stage-wrapper">
+  <div id="stage">
+    <div id="react-root" style="width:960px;height:540px;position:relative;overflow:hidden"></div>
+  </div>
+</div>
+
 <div id="nav">
   <button class="nav-btn" id="prev-btn">← Prev</button>
-  <div style="display:flex;flex-direction:column;align-items:center;gap:6px">
-    <div id="dots" style="display:flex;gap:6px"></div>
-    <div id="slide-label" style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:rgba(255,255,255,0.2)"></div>
+  <div style="display:flex;flex-direction:column;align-items:center;gap:8px">
+    <div id="dots" style="display:flex;gap:8px"></div>
+    <div id="slide-label" style="font-family:'Source Sans 3',sans-serif;font-size:11px;color:rgba(255,255,255,0.3)"></div>
   </div>
   <button class="nav-btn" id="next-btn">Next →</button>
 </div>
 
 <script>
-  // Scale the stage to fit the viewport, leaving room for nav
+  // Scale the stage based on the exact dimensions of the wrapper, 
+  // bypassing iOS Safari URL bar quirks and overlapping issues.
   function scaleStage() {
-    const NAV_H = 44;
-    const vw = window.innerWidth;
-    const vh = window.innerHeight - NAV_H;
-    const scale = Math.min(vw / 960, vh / 540);
+    const wrapper = document.getElementById('stage-wrapper');
     const el = document.getElementById('stage');
-    if (el) {
-      el.style.transform = `translate(-50%, -50%) scale(${scale})`;
-    }
+    if (!wrapper || !el) return;
+
+    const vw = wrapper.clientWidth;
+    const vh = wrapper.clientHeight;
+    
+    // Calculate scale, leaving a tiny 16px buffer so the slide doesn't scrape the edge of the glass on mobile
+    const scale = Math.min((vw - 16) / 960, (vh - 16) / 540);
+    
+    el.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
+  
   window.addEventListener('resize', scaleStage);
   document.addEventListener('DOMContentLoaded', scaleStage);
-  setTimeout(scaleStage, 100);
+  // Ensure it fires after fonts/React render
+  setTimeout(scaleStage, 100); 
+  setTimeout(scaleStage, 500);
 </script>
-
-<div id="stage">
-  <div id="react-root" style="width:960px;height:540px;position:relative;overflow:hidden"></div>
-</div>
 
 <script type="text/babel">
   const { useState, useEffect, useCallback } = React;
@@ -174,7 +202,7 @@
       ["Green School Works", false, false, false, true ],
     ];
     const opts = [
-      { title: "Gas — No A/C",           net: "$3.97M", sub: "No grants available" },
+      { title: "Gas — No A/C",            net: "$3.97M", sub: "No grants available" },
       { title: "Gas + Air Conditioning", net: "$8.87M", sub: "No grants available" },
       { title: "Air Source Heat Pumps",  net: "$4.52M", sub: "$10.0M before grants" },
       { title: "Geothermal",             net: "$3.71M", sub: "$13.2M before grants", best: true },
@@ -379,7 +407,7 @@
       SLIDES.forEach((_, i) => {
         const d = document.createElement("div");
         d.className = "dot" + (i === cur ? " active" : "");
-        d.style.width = i === cur ? "26px" : "9px";
+        d.style.width = i === cur ? "26px" : "12px"; // Increased inactive dot width slightly for proportion
         d.addEventListener("click", () => setCur(i));
         dotsEl.appendChild(d);
       });
@@ -393,7 +421,6 @@
   }
 
   ReactDOM.createRoot(document.getElementById("react-root")).render(<App />);
-  scaleStage();
 </script>
 </body>
 </html>

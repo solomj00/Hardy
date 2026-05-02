@@ -100,17 +100,10 @@
               ))}
             </div>
 
-            {/* Equipment chips */}
-            <div style={{ display: "flex", gap: 12 }}>
-              {["10 Rooftop HVAC Units", "2 Boilers", "Building Mgmt System", "75 In-Classroom Radiators"].map((e, i) => (
-                <div key={i} style={{
-                  flex: 1, background: BURG, color: WHITE,
-                  borderRadius: 6, padding: "16px 18px",
-                  textAlign: "center",
-                  fontFamily: SS, fontSize: 16, fontWeight: 700,
-                  lineHeight: 1.35,
-                }}>{e}</div>
-              ))}
+            <div style={{ borderTop: `4px solid ${BURG}`, paddingTop: 28 }}>
+              <div style={{ fontFamily: SS, fontSize: 20, fontWeight: 600, color: BURG, lineHeight: 1.6 }}>
+                This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to find the smartest path — and keep every option open.
+              </div>
             </div>
 
           </div>
@@ -216,9 +209,9 @@
     // ─────────────────────────────────────────────────────────────────────────
     function Slide4() {
       const points = [
-        "Replacement happens regardless — likely as a costly emergency",
-        "Major grants disappear — MSBA, IRA, MassSave all require advance planning",
-        "Arlington's Net Zero goals take a significant, likely permanent setback",
+        "Replacement happens regardless — potentially as a costly emergency",
+        "Arlington exits grant programs already underway — MSBA, IRA, MassSave all require advance planning",
+        "Arlington's Net Zero goals take a significant setback",
       ];
       return (
         <div style={{ ...base, background: CREAM }}>
@@ -243,11 +236,7 @@
               ))}
             </div>
 
-            <div style={{ borderTop: `4px solid ${BURG}`, paddingTop: 28 }}>
-              <div style={{ fontFamily: SS, fontSize: 20, fontWeight: 600, color: BURG, lineHeight: 1.55 }}>
-                This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to find the smartest path — and keep every option open.
-              </div>
-            </div>
+
 
           </div>
         </div>

@@ -10,8 +10,6 @@
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    /* Use Flexbox on the body to cleanly separate the stage area from the nav */
     html, body { 
       width: 100%; 
       height: 100%; 
@@ -20,41 +18,33 @@
       display: flex;
       flex-direction: column;
     }
-    
-    /* The wrapper fills all space above the nav bar */
     #stage-wrapper {
       flex: 1;
       position: relative;
       width: 100%;
       overflow: hidden;
     }
-
     #stage {
       position: absolute;
       top: 50%;
       left: 50%;
       width: 960px;
       height: 540px;
-      /* REMOVED: transform-origin: top left; -> Letting it default to center fixes the scaling math */
-      /* transform set by JS */
     }
-
     #nav {
-      /* REMOVED: position: fixed; -> Flexbox naturally keeps this at the bottom */
       flex-shrink: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 12px 20px; /* Slightly taller padding for mobile thumbs */
+      padding: 12px 20px;
       z-index: 100;
       background: #1a0507;
     }
-
     .nav-btn {
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.15);
       color: #fff;
-      padding: 10px 20px; /* Increased touch target for mobile */
+      padding: 10px 20px;
       border-radius: 6px;
       font-family: 'Source Sans 3', sans-serif;
       font-size: 13px;
@@ -63,9 +53,8 @@
       cursor: pointer;
     }
     .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
-
     .dot {
-      height: 12px; /* Increased from 8px for mobile tap targets */
+      height: 12px;
       border-radius: 6px;
       background: rgba(255,255,255,0.2);
       cursor: pointer; 
@@ -93,25 +82,17 @@
 </div>
 
 <script>
-  // Scale the stage based on the exact dimensions of the wrapper, 
-  // bypassing iOS Safari URL bar quirks and overlapping issues.
   function scaleStage() {
     const wrapper = document.getElementById('stage-wrapper');
     const el = document.getElementById('stage');
     if (!wrapper || !el) return;
-
     const vw = wrapper.clientWidth;
     const vh = wrapper.clientHeight;
-    
-    // Calculate scale, leaving a tiny 16px buffer so the slide doesn't scrape the edge of the glass on mobile
     const scale = Math.min((vw - 16) / 960, (vh - 16) / 540);
-    
     el.style.transform = `translate(-50%, -50%) scale(${scale})`;
   }
-  
   window.addEventListener('resize', scaleStage);
   document.addEventListener('DOMContentLoaded', scaleStage);
-  // Ensure it fires after fonts/React render
   setTimeout(scaleStage, 100); 
   setTimeout(scaleStage, 500);
 </script>
@@ -131,15 +112,7 @@
 
   const slide = { width: 960, height: 540, position: "relative", overflow: "hidden", display: "flex", flexDirection: "column" };
 
-  function Bar({ n, total }) {
-    return (
-      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 6, background: "rgba(0,0,0,0.12)" }}>
-        <div style={{ height: "100%", width: `${(n / total) * 100}%`, background: BURG2 }} />
-      </div>
-    );
-  }
-
-  // ── SLIDE 1 ──────────────────────────────────────────────────────────────
+  // ── SLIDE 1 — Title ──────────────────────────────────────────────────────
   function Slide1() {
     return (
       <div style={{ ...slide, background: BURG }}>
@@ -162,39 +135,8 @@
     );
   }
 
-  // ── SLIDE 2 ──────────────────────────────────────────────────────────────
+  // ── SLIDE 2 — Four Options (was Slide 3) ────────────────────────────────
   function Slide2() {
-    return (
-      <div style={{ ...slide, background: CREAM }}>
-        <Bar n={2} total={6} />
-        <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "48px 72px" }}>
-          <div style={{ fontFamily: PF, fontSize: 36, color: BURG, lineHeight: 1.25, marginBottom: 30 }}>
-            Hardy's HVAC is nearing end of life.
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: "auto" }}>
-            {[
-              "Article 67 appropriates $375k to fund a study & schematic design(?) to make the best decision for the town.",
-              "The town will recieve a 43% rebate (~$161,250) due to our accepatnce into the MSBA Accelerated Repair Program.",
-              "Town Meeting will vote, likely next year, on the construction project.  Tonight's vote is only on the study."
-            ].map((pt, i) => (
-              <div key={i} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
-                <div style={{ width: 11, height: 11, borderRadius: "50%", background: BURG, flexShrink: 0, marginTop: 9 }} />
-                <div style={{ fontFamily: SS, fontSize: 22, color: BURG, lineHeight: 1.55 }}>{pt}</div>
-              </div>
-            ))}
-          </div>
-          <div style={{ borderTop: `4px solid ${BURG}`, paddingTop: 24 }}>
-            <div style={{ fontFamily: SS, fontSize: 19, fontWeight: 600, color: BURG, lineHeight: 1.6 }}>
-              This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to find the smartest path — and keep every option open.
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // ── SLIDE 3 ──────────────────────────────────────────────────────────────
-  function Slide3() {
     const cats = [
       ["Air Conditioning",   false, true,  true,  true ],
       ["Net Zero Aligned",   false, false, true,  true ],
@@ -210,7 +152,6 @@
     ];
     return (
       <div style={{ ...slide, background: CREAM }}>
-        <Bar n={3} total={6} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "20px 44px" }}>
           <div style={{ fontFamily: PF, fontSize: 27, color: BURG, marginBottom: 16 }}>
             Four options — each with a very different cost to Arlington.
@@ -241,7 +182,7 @@
                 <div style={{ textAlign: "center", marginBottom: 14 }}>
                   <div style={{ fontFamily: SS, fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase", color: BURG2, marginBottom: 3 }}>Cost to Arlington</div>
                   <div style={{ fontFamily: PF, fontSize: 36, color: BURG, lineHeight: 1 }}>{o.net}</div>
-                  <div style={{ fontFamily: SS, fontSize: 12, color: BURG2, marginTop: 3 }}>{o.sub}</div>
+                  <div style={{ fontFamily: SS, fontSize: 14, color: BURG2, marginTop: 3 }}>{o.sub}</div>
                 </div>
                 <div style={{ height: 2, background: o.best ? BURG2 : "#E5E7EB", width: "100%", marginBottom: 14 }} />
                 <div style={{ display: "flex", flexDirection: "column", gap: 9, width: "100%", alignItems: "center" }}>
@@ -249,7 +190,7 @@
                     const val = vals[i];
                     return (
                       <div key={label} style={{
-                        fontFamily: SS, fontSize: 12, fontWeight: val ? 700 : 400,
+                        fontFamily: SS, fontSize: 15, fontWeight: val ? 700 : 400,
                         color: val ? GREEN : LGREY, textAlign: "center", lineHeight: 1.2,
                       }}>
                         {val ? `✓ ${label}` : label}
@@ -265,7 +206,37 @@
     );
   }
 
-  // ── SLIDE 4 ──────────────────────────────────────────────────────────────
+  // ── SLIDE 3 — The Problem / Framing (was Slide 2) ───────────────────────
+  function Slide3() {
+    return (
+      <div style={{ ...slide, background: CREAM }}>
+        <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "48px 72px" }}>
+          <div style={{ fontFamily: PF, fontSize: 36, color: BURG, lineHeight: 1.25, marginBottom: 30 }}>
+            Hardy's HVAC is nearing end of life.
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 18, marginBottom: "auto" }}>
+            {[
+              "Article 67 appropriates $375k to fund a study and schematic design to make the best decision for the town.",
+              "The town will receive a 43% rebate (~$161,250) due to our acceptance into the MSBA Accelerated Repair Program.",
+              "Town Meeting will vote, likely next year, on the construction project. Tonight's vote is only on the study."
+            ].map((pt, i) => (
+              <div key={i} style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+                <div style={{ width: 11, height: 11, borderRadius: "50%", background: BURG, flexShrink: 0, marginTop: 9 }} />
+                <div style={{ fontFamily: SS, fontSize: 22, color: BURG, lineHeight: 1.55 }}>{pt}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop: `4px solid ${BURG}`, paddingTop: 24 }}>
+            <div style={{ fontFamily: SS, fontSize: 19, fontWeight: 600, color: BURG, lineHeight: 1.6 }}>
+              This is not a vote to spend $13M. It is a vote to spend <strong>$375K</strong> to find the smartest path — and keep every option open.
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ── SLIDE 4 — No Vote ────────────────────────────────────────────────────
   function Slide4() {
     const points = [
       "Replacement happens regardless — potentially as a costly emergency",
@@ -274,7 +245,6 @@
     ];
     return (
       <div style={{ ...slide, background: CREAM }}>
-        <Bar n={4} total={6} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "44px 72px" }}>
           <div style={{ fontFamily: PF, fontSize: 36, color: BURG, marginBottom: 40 }}>
             The impact of a NO vote.
@@ -297,7 +267,7 @@
     );
   }
 
-  // ── SLIDE 5 ──────────────────────────────────────────────────────────────
+  // ── SLIDE 5 — Timeline ───────────────────────────────────────────────────
   function Slide5() {
     const steps = [
       { date: "May 6, 2026",  action: "Town Meeting votes YES on Article 67", active: true },
@@ -306,7 +276,6 @@
     ];
     return (
       <div style={{ ...slide, background: WHITE }}>
-        <Bar n={5} total={6} />
         <div style={{ flex: 1, display: "flex", flexDirection: "column", justifyContent: "center", padding: "44px 80px" }}>
           <div style={{ fontFamily: PF, fontSize: 34, color: BURG, marginBottom: 52 }}>
             Tonight starts a deliberate process.
@@ -339,7 +308,7 @@
     );
   }
 
-  // ── SLIDE 6 ──────────────────────────────────────────────────────────────
+  // ── SLIDE 6 — The Ask ────────────────────────────────────────────────────
   function Slide6() {
     const reasons = [
       "Preserves eligibility for MSBA, IRA Direct Pay, MassSave, Climate Leaders, and Green School Works",
@@ -376,7 +345,7 @@
   }
 
   const SLIDES = [Slide1, Slide2, Slide3, Slide4, Slide5, Slide6];
-  const TITLES = ["Title", "The Problem", "Four Options", "No Vote", "Timeline", "The Ask"];
+  const TITLES = ["Title", "Four Options", "The Problem", "No Vote", "Timeline", "The Ask"];
 
   function App() {
     const [cur, setCur] = useState(0);
@@ -392,7 +361,6 @@
       return () => window.removeEventListener("keydown", h);
     }, [next, prev]);
 
-    // Update nav controls imperatively (outside React root)
     useEffect(() => {
       const prevBtn = document.getElementById("prev-btn");
       const nextBtn = document.getElementById("next-btn");
@@ -408,7 +376,7 @@
       SLIDES.forEach((_, i) => {
         const d = document.createElement("div");
         d.className = "dot" + (i === cur ? " active" : "");
-        d.style.width = i === cur ? "26px" : "12px"; // Increased inactive dot width slightly for proportion
+        d.style.width = i === cur ? "26px" : "12px";
         d.addEventListener("click", () => setCur(i));
         dotsEl.appendChild(d);
       });
